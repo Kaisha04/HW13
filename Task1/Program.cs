@@ -14,33 +14,39 @@ class Program
     public static void SpawnSymbols()
     {
         Random r = new Random();
-        Console.SetCursorPosition(r.Next(50, 100), 0);
-        while (true)
+        while(true)
         {
-            GetColor();
-            int symbol = r.Next(32, 112);
-            if (symbol % 2 == 0)
+            int y = 0;
+            int x = r.Next(1, 110);
+            int countOfSymbols = r.Next(3, 8);
+            int valueColor = 0;
+            lock (locker)
             {
-                Console.Write("");
-            }else Console.Write((char)symbol);
+                for (int i = 0; i < countOfSymbols; i++)
+                {
+                    GetColor(valueColor);
+                    valueColor = (valueColor + 1);
+                    Console.SetCursorPosition(x, y);
+                    Console.Write($"{(char)r.Next(32, 123)}");
+                    y++;
+
+                }
+            }
+            valueColor = 0;
+            Thread.Sleep(100);
         }
     }
 
-    public static void GetColor()
+    public static void GetColor(int value)
     {
-        switch(Random.Shared.Next(1,5))
+        switch(value)
         {
-            case 1: Console.ForegroundColor = ConsoleColor.Red;
+            case 0: Console.ForegroundColor = ConsoleColor.White;
                 break;
-            case 2: Console.ForegroundColor = ConsoleColor.Yellow;
+            case 1: Console.ForegroundColor = ConsoleColor.Green;
                 break;
-            case 3: Console.ForegroundColor = ConsoleColor.Blue;
-                break;
-            case 4:
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                break;
-            case 5:
-                Console.ForegroundColor = ConsoleColor.Green;
+            case 2:
+            default: Console.ForegroundColor = ConsoleColor.DarkGreen;
                 break;
         }
     }
