@@ -20,18 +20,18 @@ class Program
             int x = r.Next(1, 110);
             int countOfSymbols = r.Next(3, 8);
             int valueColor = 0;
-            lock (locker)
-            {
-                for (int i = 0; i < countOfSymbols; i++)
+                while (y < 30)
+                {
+                lock (locker)
                 {
                     GetColor(valueColor);
                     valueColor = (valueColor + 1);
                     Console.SetCursorPosition(x, y);
                     Console.Write($"{(char)r.Next(32, 123)}");
                     y++;
+                }
 
                 }
-            }
             valueColor = 0;
             Thread.Sleep(100);
         }
