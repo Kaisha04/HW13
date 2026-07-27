@@ -14,14 +14,15 @@ class Program
     public static void SpawnSymbols()
     {
         Random r = new Random();
-        Console.SetCursorPosition(r.Next(1, 20), 0);
+        Console.SetCursorPosition(r.Next(50, 100), 0);
         while (true)
         {
+            GetColor();
             int symbol = r.Next(32, 112);
             if (symbol % 2 == 0)
             {
-                Console.WriteLine();
-            }else Console.WriteLine((char)symbol);
+                Console.Write("");
+            }else Console.Write((char)symbol);
         }
     }
 
