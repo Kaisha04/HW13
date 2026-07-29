@@ -16,24 +16,45 @@ class Program
         Random r = new Random();
         while(true)
         {
-            int y = 0;
+            int y = r.Next(0,10);
             int x = r.Next(1, 110);
             int countOfSymbols = r.Next(3, 8);
             int valueColor = 0;
-                while (y < 30)
-                {
+            while (y < Console.BufferHeight)
+            {
                 lock (locker)
                 {
-                    GetColor(valueColor);
-                    valueColor = (valueColor + 1);
+                    GetColor(0);
                     Console.SetCursorPosition(x, y);
                     Console.Write($"{(char)r.Next(32, 123)}");
-                    y++;
-                }
 
+                    if (y - 1 >= 0)
+                    {
+                        GetColor(1);
+                        Console.SetCursorPosition(x, y - 1);
+                        Console.Write($"{(char)r.Next(32, 123)}");
+                    }
+
+                    GetColor(2);
+                    for (int i = 2; i < countOfSymbols; i++)
+                    {
+                        if (y - i >= 0)
+                        {
+                            Console.SetCursorPosition(x, y - i);
+                            Console.Write($"{(char)r.Next(32, 123)}");
+                        }
+                        
+                    }
+
+                    if (y - countOfSymbols >= 0)
+                    {
+                        Console.SetCursorPosition(x, y - countOfSymbols);
+                        Console.Write(" ");
+                    }
                 }
-            valueColor = 0;
-            Thread.Sleep(100);
+                Thread.Sleep(100);
+                y++;
+            }
         }
     }
 
@@ -56,8 +77,15 @@ class Program
         Thread secondThread = new Thread(SpawnSymbols);
         Thread thirdThread = new Thread(SpawnSymbols);
 
+        Thread fourthThread = new Thread(SpawnSymbols);
+        Thread fiveThread = new Thread(SpawnSymbols);
+        Thread sixThread = new Thread(SpawnSymbols);
+
         firstThread.Start();
         secondThread.Start();
         thirdThread.Start();
+        fourthThread.Start();
+        fiveThread.Start();
+        sixThread.Start();
     }
 }
